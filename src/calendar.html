@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Календарь</title>
+</head>
+<body>
+    <h1>Выберите дату</h1>
+
+    <input type="date" id="calendar" />
+
+    <button onclick="showDate()">Показать дату</button>
+
+    <script>
+        // Установка текущей даты
+        let today = new Date();
+        let dd = String(today.getDate()).padStart(2, '0');
+        let mm = String(today.getMonth() + 1).padStart(2, '0'); // Январь = 0
+        let yyyy = today.getFullYear();
+
+        let minDate = `${yyyy}-${mm}-${dd}`;
+        document.getElementById("calendar").min = minDate;
+
+        // Создание максимально допустимой даты (через 3 месяца)
+        let maxDate = new Date(today);
+        maxDate.setMonth(maxDate.getMonth() + 3);
+        let maxDd = String(maxDate.getDate()).padStart(2, '0');
+        let maxMm = String(maxDate.getMonth() + 1).padStart(2, '0');
+        let maxYyyy = maxDate.getFullYear();
+
+        let maxDateFormatted = `${maxYyyy}-${maxMm}-${maxDd}`;
+        document.getElementById("calendar").max = maxDateFormatted;
+
+        // Установка текущей даты как значение по умолчанию
+        document.getElementById("calendar").value = minDate;
+
+        // Функция для вывода выбранной даты в консоль
+        function showDate() {
+            let selectedDate = document.getElementById("calendar").value;
+            console.log("Выбранная дата: " + selectedDate);
+        }
+    </script>
+</body>
+</html>
