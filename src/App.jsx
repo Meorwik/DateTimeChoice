@@ -6,9 +6,34 @@ import Clock from "./Clock.jsx";
 
 function App() {
   const currentDate = new Date();
-  console.log(currentDate)
-  // const startDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getUTCDate() + 2);
-  const [selectedDate, setSelectedDate] = useState(`${currentDate.getFullYear()}-0${currentDate.getMonth() + 1}-0${currentDate.getUTCDate() + 1}`);
+const currentMonth = currentDate.getMonth() + 1;
+const currentYear = currentDate.getFullYear();
+
+// Функция для определения количества дней в месяце
+function getDaysInMonth(month, year) {
+  return new Date(year, month, 0).getDate();
+}
+
+const daysInCurrentMonth = getDaysInMonth(currentMonth, currentYear);
+let currentDay = currentDate.getDate() + 1;
+
+let nextMonth = currentMonth;
+let nextYear = currentYear;
+
+if (currentDay > daysInCurrentMonth) {
+  currentDay = 1;
+  nextMonth += 1;
+  if (nextMonth > 12) {
+    nextMonth = 1;
+    nextYear += 1;
+  }
+}
+
+const [selectedDate, setSelectedDate] = useState(
+  `${nextYear}-${nextMonth.toString().padStart(2, "0")}-${currentDay.toString().padStart(2, "0")}`
+);
+
+
   const [hours, setHours] = useState(0);
   const [minutes, setMinutes] = useState(0);
 
