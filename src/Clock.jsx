@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './Clock.css';
 
 const TimePicker = ({hours, setHours, minutes, setMinutes}) => {
 
@@ -15,10 +16,10 @@ const TimePicker = ({hours, setHours, minutes, setMinutes}) => {
   //   console.log(`Выбранное время: ${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}`);
   // };
 
-  const generateOptions = (count) => {
-    return Array.from({ length: count }, (_, i) => (
-      <option key={i} value={i}>
-        {String(i).padStart(2, '0')}
+  const generateOptions = (count, step = 1) => {
+    return Array.from({ length: Math.floor(count / step) + 1 }, (_, i) => (
+      <option key={i} value={i * step}>
+        {String(i * step).padStart(2, '0')}
       </option>
     ));
   };
@@ -26,30 +27,29 @@ const TimePicker = ({hours, setHours, minutes, setMinutes}) => {
   return (
     <div>
       <div>
-        <label>
-          Часы:
-          <select value={hours} onChange={handleHoursChange}>
-            {generateOptions(24)}
-          </select>
-        </label>
+        <label style={{ fontSize: '16px' }}>
+        Часы:
+        <select
+          value={hours}
+          onChange={handleHoursChange}
+          style={{ fontSize: '16px', padding: '5px' }}
+        >
+          {generateOptions(24)}
+        </select>
+      </label>
       </div>
       <div>
-        <label>
-          Минуты:
-          <select value={minutes} onChange={handleMinutesChange}>
-            {generateOptions(60)}
-          </select>
-        </label>
+        <label style={{ fontSize: '16px' }}>
+        Минуты:
+        <select
+          value={minutes}
+          onChange={handleMinutesChange}
+          style={{ fontSize: '16px', padding: '5px' }}
+        >
+          {generateOptions(60, 10)}
+        </select>
+      </label>
       </div>
-      {/*<div>*/}
-      {/*  <label>*/}
-      {/*    Секунды:*/}
-      {/*    <select value={seconds} onChange={handleSecondsChange}>*/}
-      {/*      {generateOptions(60)}*/}
-      {/*    </select>*/}
-      {/*  </label>*/}
-      {/*</div>*/}
-      {/*<button onClick={handleButtonClick}>Показать время в консоли</button>*/}
     </div>
   );
 };
